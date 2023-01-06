@@ -39,8 +39,8 @@ images with _down are particles near glass slide
 
 Outputs are two png images and one MPEG-4 video
 
-Track results overlap on the origin image video
+1. Track results overlap on the origin image video
 
-particle's moving path image
+2. particle's moving path image
 
-MSD result image
+3. MSD result image
