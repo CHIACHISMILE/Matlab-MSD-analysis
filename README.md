@@ -5,11 +5,11 @@ Mean Square Displacement for particle tracking--Brownian motion
 
 There are three methods below to measure Mean Square Displacement(MSD):
 
-First, MSD_auto.m using imfindcircle tool to Track the center of the cell then calculate MSD and plot.
+1. MSD_auto.m using imfindcircle tool to Track the center of the cell then calculate MSD and plot.
 
-Second, MSD_ImageJ_MTrack2.m using imagej preprocess the tiff image and output centers in .txt file then calculate MSD and plot.
+2. MSD_ImageJ_MTrack2.m using imagej preprocess the tiff image and output centers in .txt file then calculate MSD and plot.
 
-Third, MSD_manual.m because the unprecise tracking results by the two methods above, using getpts to track centers manually.
+3. MSD_manual.m because the unprecise tracking results by the two methods above, using getpts to track centers manually.
 
 # Demo
 
