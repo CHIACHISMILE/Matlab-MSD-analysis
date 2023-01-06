@@ -1,11 +1,15 @@
 clear all;
 close all;
 
-folder = 'BioTransport/1_down/';
+folder = 'data/1_down/';%%%%%image folder dir
+outputpath = 'results/1_down/';
+mkdir(outputpath);
 d=dir(append(folder,'*.tif'));
 skip = 0;
 magnificationFactor=1;
 % framerate = 50;
+name = split(folder,'/');
+name = string([strcat(outputpath,name(end-1))]);
 
 
 for i=1:numel(d) 
@@ -14,6 +18,7 @@ for i=1:numel(d)
       im=imread([folder d(i).name]);
       figure;
       imshow(im);
+      title(sprintf('slicenumber = %d/%d',i,numel(d)));
       [xi,yi] = getpts;
       close all;
       centers = [xi(1) yi(1)];
@@ -24,7 +29,7 @@ for i=1:numel(d)
       im=imread([folder d(i).name]);
       figure;
       imshow(im);
-      title('slicenumber = ',i)
+      title(sprintf('slicenumber = %d/%d',i,numel(d)));
       [xi,yi] = getpts;
       close all;
       centers = [xi(1) yi(1)];
@@ -40,26 +45,25 @@ for i=1:numel(d)
   end
 end
 
-name = split(d(i).folder,'/');
-name = string(strcat(name(end-1),'/',name(end)));
+
 
 implay(rawframes);
-v = VideoWriter([name '_manual'],'MPEG-4');
+v = VideoWriter(strcat(name,'_manual'),'MPEG-4');
 v.Quality = 100;
 v.FrameRate = 50;
 open(v);
 writeVideo(v,rawframes);
 close(v)
+
 arr=table2array(T1);
 X=arr(:,2);Yp=127-arr(:,3);Y=arr(:,3);
-
 figure;
 plot(X,Yp,'b');
 xlabel('x(pixel=0.11um)');
 ylabel('y(pixel=0.11um)');
 title('Moving Path');
 grid on;
-saveas(gcf,[name '_manual_movingpath.png']);
+saveas(gcf,strcat(name,'_manual_movingpath.png'));
 
 
 xsize=size(X,1);
@@ -97,7 +101,7 @@ yCalc1 = b1(2)*x+b1(1);
 plot(x,yCalc1,'--',"LineWidth",2);
 
 
-format bank;;
+format bank;
 new_xticks=0:25:200;
 xticks(new_xticks);
 xticklabels({0:0.5:4});
@@ -113,4 +117,4 @@ skip;
 if skip > numel(d)*0.3 
     printf('Skipped too much, This Result is not reliable');
 end
-saveas(gcf,[name '_manual_MSD.png']);
+saveas(gcf,strcat(name,'_manual_MSD.png'));

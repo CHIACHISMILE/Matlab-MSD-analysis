@@ -2,14 +2,15 @@ clear all;
 close all;
 warning('off','all');
 
-folder = 'BioTransport/1_down/';
+folder = 'data/1_down/';%%%%%image folder dir
+outputpath = 'results/1_down/';
+mkdir(outputpath);
 d=dir(append(folder,'*.tif'));
 skip = 0;
 magnificationFactor=1;
 % framerate = 50;
-name = split(d(i).folder,'/');
-name = string(strcat(name(end-1),'/',name(end)));
-
+name = split(folder,'/');
+name = string([strcat(outputpath,name(end-1))]);
 
 
 for i=1:numel(d) 
@@ -20,17 +21,17 @@ for i=1:numel(d)
       centers=centers(1,:);
       T1=table(i,centers);
       rawframes(:,:,:,i) = imresize(insertShape(im,'filled-circle',[centers(1),centers(2),2],'Color','red','LineWidth',1),magnificationFactor);
-      
+
   else
       im=imread([folder d(i).name]);
       [centers, radii, metric] = imfindcircles(im,[3 30]);
-      centers=centers(1,:);
       if isempty(centers) == 1
         im = cat(3, im, im, im);
         rawframes(:,:,:,i) = imresize(im,magnificationFactor);
         skip = skip+1;
         continue
       else
+        centers=centers(1,:);
         T1=[T1;table(i,centers)];
         rawframes(:,:,:,i) = imresize(insertShape(im,'filled-circle',[centers(1),centers(2),2],'Color','red','LineWidth',1),magnificationFactor);
       end
@@ -54,7 +55,7 @@ xlabel('x(pixel=0.11um)');
 ylabel('y(pixel=0.11um)');
 title('Moving Path');
 grid on;
-saveas(gcf,[name '_movingpath.png']);
+saveas(gcf,strcat(name ,'_movingpath.png'));
 
 
 xsize=size(X,1);
@@ -104,5 +105,5 @@ skip;
 if skip > numel(d)*0.3 
     printf('Skipped too much, This Result is not reliable');
 end
-saveas(gcf,[name '_MSD.png']);
+saveas(gcf,strcat(name, '_MSD.png'));
 warning('on','all');

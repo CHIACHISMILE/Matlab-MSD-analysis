@@ -1,13 +1,16 @@
 clear all;
 close all;
 
-folder = 'BioTransport/1_down/';%%%%%image folder dir
+folder = 'data/1_down/';%%%%%image folder dir
+outputpath = 'results/1_down/';
+mkdir(outputpath);
 d=dir(append(folder,'*.tif'));
 skip = 0;
-magnificationFactor=1;%%%%%%%set resize image 
+magnificationFactor=1;
 % framerate = 50;
-name = split(d(i).folder,'/');
-name = string(strcat(name(end-1),'/',name(end)));
+name = split(folder,'/');
+name = string([strcat(outputpath,name(end-1))]);
+
 
 
 M = readmatrix('/imj_track_res/trackresults_1_down.txt');% read Trackresults.txt
@@ -36,7 +39,7 @@ end
 
 
 implay(rawframes);%preview video
-v = VideoWriter([name '_imj'],'MPEG-4');%save video in MP4
+v = VideoWriter(strcat(name,'_imj'),'MPEG-4');%save video in MP4
 v.Quality = 100;
 v.FrameRate = 50;
 open(v);
@@ -52,7 +55,7 @@ xlabel('x(pixel=0.11um)');
 ylabel('y(pixel=0.11um)');
 title('Moving Path');
 grid on;
-saveas(gcf,[name 'imj__movingpath.png']);%save moving Path
+saveas(gcf,strcat(name,'_imj__movingpath.png'));%save moving Path
 
 
 xsize=size(X,1);
@@ -103,4 +106,4 @@ skip;
 if skip > numel(d)*0.3 
     printf('Skipped too much, This Result is not reliable');
 end
-saveas(gcf,[name '_imj_MSD.png']);%save MSD result
+saveas(gcf,strcat(name,'_imj_MSD.png'));%save MSD result
