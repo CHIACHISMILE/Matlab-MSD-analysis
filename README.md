@@ -24,7 +24,7 @@ There are three methods below to measure Mean Square Displacement(MSD):
 
 Input data are .tif seperated image sequances(please put your own data in the file /data)
 
-In this project i provide 6 pairs of images
+In this project I provided 6 pairs of images
 
 images without _down are particles that stays at the middle of the fluid
 
