@@ -1,5 +1,5 @@
 # Matlab-MSD-analysis
-Mean Square Displacement for cell tracking--Brownian motion
+Mean Square Displacement for particle tracking--Brownian motion
 
 # Please set the folder to the path in Matlab
 
