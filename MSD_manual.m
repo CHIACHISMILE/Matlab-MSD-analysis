@@ -10,6 +10,7 @@ magnificationFactor=1;
 % framerate = 50;
 name = split(folder,'/');
 name = string([strcat(outputpath,name(end-1))]);
+rawframes = zeros(128,128,3,numel(d),'uint8');
 
 
 for i=1:numel(d) 

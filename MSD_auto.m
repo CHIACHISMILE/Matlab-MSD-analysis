@@ -11,14 +11,13 @@ magnificationFactor=1;
 % framerate = 50;
 name = split(folder,'/');
 name = string([strcat(outputpath,name(end-1))]);
+rawframes = zeros(128,128,3,numel(d),'uint8');
 
-
-for i=1:numel(d) 
+for i=1:numel(d)
 % for i=1:100  
   if i == 1
       im=imread([folder d(i).name]);
       [centers, radii, metric] = imfindcircles(im,[3 30]);
-      centers=centers(1,:);
       T1=table(i,centers);
       rawframes(:,:,:,i) = imresize(insertShape(im,'filled-circle',[centers(1),centers(2),2],'Color','red','LineWidth',1),magnificationFactor);
 
@@ -31,7 +30,6 @@ for i=1:numel(d)
         skip = skip+1;
         continue
       else
-        centers=centers(1,:);
         T1=[T1;table(i,centers)];
         rawframes(:,:,:,i) = imresize(insertShape(im,'filled-circle',[centers(1),centers(2),2],'Color','red','LineWidth',1),magnificationFactor);
       end
@@ -64,7 +62,7 @@ datasize=min(xsize,ysize);
 
 dt=1;%init loop var
 msd_total=[];
-y1=[];
+
 while (dt<datasize)
     for i=1:datasize-dt
         dx(i,1)=X(i+dt,1)-X(i,1);
